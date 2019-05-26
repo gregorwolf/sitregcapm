@@ -14,6 +14,7 @@ describe(__filename, () => {
     it('returns a JSON payload', done => {
       request(this.app)
         .get('/public')
+        .auth('administrator', '')
         .expect(200)
         .expect('Content-Type', 'application/json;odata.metadata=minimal')
         .end(error => (error ? done.fail(error) : done()))
@@ -21,11 +22,24 @@ describe(__filename, () => {
     it('returns a list of RelationsToSAP', done => {
       request(this.app)
         .get('/public/RelationsToSAP')
+        .auth('administrator', '')
         .expect(200)
         .expect('Content-Type', 'application/json;odata.metadata=minimal')
         .end(function (err, res) {
           if (err) return done(err)
           expect(res.body.value.length).toBeGreaterThan(1)
+          done()
+        })
+    })
+    it('Check if RelationsToSAP is returned in German', done => {
+      request(this.app)
+        .get('/public/RelationsToSAP?sap-language=de')
+        .auth('administrator', '')
+        .expect(200)
+        .expect('Content-Type', 'application/json;odata.metadata=minimal')
+        .end(function (err, res) {
+          if (err) return done(err)
+          expect(res.body.value[0].name).toBe('Sonstige')
           done()
         })
     })

@@ -15,7 +15,7 @@ app.loaded = []
 
 app.loaded.push(
   cds
-    .serve('./srv/admin-service', {
+    .serve('AdminService', {
       passport: {
         strategy: 'mock',
         users: {
@@ -33,7 +33,7 @@ app.loaded.push(
 )
 app.loaded.push(
   cds
-    .serve('./srv/public-service', {})
+    .serve('PublicService', {})
     .in(app)
     .at('public/')
     .catch(console.error)
