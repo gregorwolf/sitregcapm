@@ -2,6 +2,7 @@ const app = require('express')()
 const helmet = require('helmet')
 const compression = require('compression')
 const cds = require('@sap/cds')
+cds.options = { kind: 'sqlite' }
 
 app.use(helmet())
 app.use(compression({ threshold: '512b' }))
